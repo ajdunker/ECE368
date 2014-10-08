@@ -4,19 +4,19 @@
 
 long *Load_File (char *Filename, int *Size)
 {
-  FILE *fil;
+  FILE * fil;
   fil = fopen(Filename, "r");
-  long temp;
-  fscanf(fil, "%ld", &temp);
-  *Size = temp;
+  long reader;
+  fscanf(fil, "%ld", &reader);
+  *Size = reader;
   long * arr = malloc((*Size) * sizeof(long));
   rewind(fil);
   int i = 0;
-  while(fscanf(fil, "%ld", &temp) == 1)
+  while(fscanf(fil, "%ld", &reader) == 1)
     {
-      if(i != 0 )
+      if(i != 0)
 	{
-	  arr[i-1] = temp;
+	  arr[i-1] = reader;
 	}
       i++;
     }
@@ -25,57 +25,52 @@ long *Load_File (char *Filename, int *Size)
 }
 int Save_File (char *Filename, long *Array, int Size) 
 {
-  FILE *fp = fopen(Filename, "w");
-  int n;
-  for( n = 0; n< Size; n++)
+  FILE * fil = fopen(Filename, "w");
+  int i, printed = 0;
+  for(i = 0; i <= Size; i++)
     {
-      if(n==0)
+      if(i == 0)
 	{
-	  fprintf(fp,"%d\n", Size);
+	  fprintf(fil, "%d\n", Size);
 	}
       else
 	{
-	  fprintf(fp,"%ld\n", Array[n]);
+	  fprintf(fil, "%ld\n", Array[i - 1]);
+	  printed++;
 	}
     }
-  fclose(fp);
-  return Size;
+  fclose(fil);
+  return printed;
 }
 void Shell_Insertion_Sort (long *Array, int Size, double *NComp, double *NMove)
 {
-  long * seq_array = malloc(Size*sizeof(long));
-  int q = 1;
-  int p = 0;
+  int q = 1, p = 0;
   while(q < Size)
     {
       q = q * 2;
       p++;
     }
-  q = q/2;
-  int i;
-  int a;
-  long num = 1;
-  long temp;
-  int iter = 0;
+  int array_size = (p * (p + 1)) / 2;
+  q = q / 2;
+  long * seq_array = malloc(array_size * sizeof(long));
+  int i, j, iter = 0;
+  long temp, num = 1;
   for(i = 1; i <= p; i++)
     {
       temp = num;
-      for(a = 1; a <= i; a++)
+      for(j = 1; j <= i; j++)
 	{
 	  if (num < Size)
 	    {
-	    seq_array[iter] = num;
-	    num = num * 3 / 2;
-	    iter++;
+	      seq_array[iter] = num;
+	      num = num * 3 / 2;
+	      iter++;
 	    }
 	}
       num = temp * 2;
     }
   qsort(seq_array, iter, sizeof(long), cmpfunc);
-  int x;
-  int y;
-  int z;
-  int gap;
+  int x, y, z, gap;
   for(x = 0; x < iter; x++)
     {
       gap = (int) seq_array[x];
@@ -99,13 +94,18 @@ void Improved_Bubble_Sort (long *Array, int Size, double *NComp, double *NMove)
 {
   int i, j, gap, swapped = 1;
   double temp;
-  
   gap = Size;
   while (gap > 1 || swapped == 1)
     {
       gap = gap * 10 / 13;
-      if (gap == 9 || gap == 10) gap = 11;
-      if (gap < 1) gap = 1;
+      if (gap == 9 || gap == 10)
+	{
+	  gap = 11;
+	}
+      if (gap < 1)
+	{
+	  gap = 1;
+	}
       swapped = 0;
       for(i = 0, j = gap; j < Size; i++, j++)
 	{
@@ -123,54 +123,57 @@ void Improved_Bubble_Sort (long *Array, int Size, double *NComp, double *NMove)
 }
 void Save_Seq1 (char *Filename, int N)
 {
-  long * seq_array = malloc(N * sizeof(long));
-  int q = 1;
-  int p = 0;
+  int q = 1, p = 0;
   while(q < N)
     {
       q = q * 2;
       p++;
     }
-  q = q/2;
-  int i;
-  int a;
-  long num = 1;
-  long temp;
-  int iter = 0;
+  int array_size = (p * (p + 1)) / 2;
+  q = q / 2;
+  long * seq_array = malloc(array_size * sizeof(long));
+  int i, j, iter = 0;
+  long temp, gap = 1;
   for(i = 1; i <= p; i++)
     {
-      temp = num;
-      for(a = 1; a <= i; a++)
+      temp = gap;
+      for(j = 1; j <= i; j++)
 	{
-	  if (num < N)
+	  if (gap < N)
 	    {
-	    seq_array[iter] = num;
-	    num = num * 3 / 2;
+	    seq_array[iter] = gap;
+	    gap = gap * 3 / 2;
 	    iter++;
 	    }
 	}
-      num = temp * 2;
+      gap = temp * 2;
     }
   qsort(seq_array, iter, sizeof(long), cmpfunc);
-  FILE *fp = fopen(Filename, "w");
-  int z;
-  for( z = 0; z < iter; z++)
+  FILE * fil = fopen(Filename, "w");
+  for( i = 0; i < iter; i++)
     {
-      fprintf(fp,"%ld\n", seq_array[z]);
+      fprintf(fil, "%ld\n", seq_array[i]);
     }
   free(seq_array);
-  fclose(fp);
+  fclose(fil);
 }
 void Save_Seq2 (char *Filename, int N)
 {
-  long * seq_array = malloc(N * sizeof(long));
+  double gap_check = 1.3;
+  int iter = 1;
+  while((long)(N / gap_check) > 1)
+    {
+      gap_check = gap_check * 1.3;
+      iter++;
+    }
+  long * seq_array = malloc(iter * sizeof(long));
   double gap = 1;
   int i = 0;
   int array_i = 0;
   do
     {
      gap = gap * 1.3;
-      if( i != 0 && (long)(N / gap) != seq_array[array_i-1])
+      if((long)(N / gap) != seq_array[array_i-1])
 	{
 	  if((long)(N / gap) == 9 || (long)(N / gap) == 10)
 	    {
@@ -184,9 +187,7 @@ void Save_Seq2 (char *Filename, int N)
 	}
       i++;
     } while((long)(N / gap) != 1);
-
-  qsort(seq_array, array_i, sizeof(long), cmpfunc);
-  FILE *fp = fopen(Filename, "w");
+  FILE * fp = fopen(Filename, "w");
   int z;
   for( z = 0; z < array_i; z++)
     {

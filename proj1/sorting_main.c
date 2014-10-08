@@ -49,6 +49,8 @@ int main (
       printf("Enter your choice: ");
       scanf("%d",&Response);
       getchar();
+      
+      Save_Seq2("TestFile.txt", 1000);
 
       if (Response == 5) // quit program
 	{
