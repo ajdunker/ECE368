@@ -16,11 +16,11 @@ typedef struct tree_node_t {
 } TreeNode;
 
 typedef struct weightnode {
-	struct weightnode * next;
-	TreeNode * tree_ptr;
+  struct weightnode * next;
+  TreeNode * tree_ptr;
 } WeightNode;
 
-void frequency_count(char *Filename, int * frequency);
+int frequency_count(char *Filename, int * frequency);
 Node * List_create(int value, int index);
 Node * List_build(int * frequencies);
 Node * List_insert_ascend(Node * head, int value, int index);
@@ -34,16 +34,12 @@ void Tree_destroy(TreeNode * node);
 TreeNode * TreeNode_create(int char_val, int weight_val);
 TreeNode * Tree_merge(TreeNode * tn1, TreeNode * tn2);
 
-void Tree_print ( TreeNode * tn , int level );
-void Weight_print(WeightNode * head);
-
 int Tree_heightHelper(TreeNode * tn, int height);
 int Tree_height(TreeNode * tn);
 void Tree_leafHelper(TreeNode * tn, int * num);
 int Tree_leaf(TreeNode * tn);
 void buildCodeBookHelper(TreeNode * tn, int ** codebook, int * row, int col);
 void buildCodeBook(TreeNode * root, int ** codebook);
-void printCodeBook(int ** codebook, int numRow);
 
 int writeBit(FILE * fptr, unsigned char bit, unsigned char * whichbit, unsigned char * curbyte);
 void char2bits(FILE * outfptr, int ch, unsigned char * whichbit, unsigned char * curbyte);

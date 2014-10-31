@@ -9,8 +9,8 @@ typedef struct tree_node_t {
 } TreeNode;
 
 typedef struct weightnode {
-	struct weightnode * next;
-	TreeNode * tree_ptr;
+  struct weightnode * next;
+  TreeNode * tree_ptr;
 } WeightNode;
 
 typedef struct freq_list
@@ -22,9 +22,9 @@ typedef struct freq_list
 
 TreeNode * readHeader(FILE * infptr);
 
-WeightNode * MergeWeightNode(WeightNode * head, int mode);
+WeightNode * MergeWeightNode(WeightNode * head);
 WeightNode * WeightNode_create(TreeNode * tn);
-WeightNode * WeightNode_insert(WeightNode * head, WeightNode * wn, int mode);
+WeightNode * WeightNode_insert(WeightNode * head, WeightNode * wn);
 
 void Tree_destroy(TreeNode * node);
 TreeNode * TreeNode_create(int char_val, int weight_val);
@@ -32,4 +32,4 @@ TreeNode * Tree_merge(TreeNode * tn1, TreeNode * tn2);
 
 int readBit(FILE * fptr, unsigned char * bit, unsigned char * whichbit, unsigned char * curbyte);
 int decode(char * infile, char * outfile);
-void Tree_print ( TreeNode * tn , int level );
+int endswith(const char* end, const char* what);
