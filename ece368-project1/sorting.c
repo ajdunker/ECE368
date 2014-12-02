@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "sorting.h"
 
+
 long *Load_File (char *Filename, int *Size)
 {
   FILE * fil;
@@ -121,6 +122,7 @@ void Improved_Bubble_Sort (long *Array, int Size, double *NComp, double *NMove)
 	}
     }
 }
+//Function
 void Save_Seq1 (char *Filename, int N)
 {
   int q = 1, p = 0;
